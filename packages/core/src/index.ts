@@ -1,4 +1,4 @@
-export { defaultFrameBoardDevices } from './devices';
+export { defaultFrameBoardDevices, defaultFrameBoardMobileDevices } from './devices';
 export {
   getFrameBoardArtboardId,
   getFrameBoardScreenshotFilename,

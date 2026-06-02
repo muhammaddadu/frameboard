@@ -2,23 +2,44 @@
 
 See every screen and state of your app in one place.
 
-FrameBoard is a product-state review board for React and React Native apps. It renders your screen components against fixture states on a Figma-style canvas so teams can review screens, device presets, responsive layouts, themes, and app-shell previews without manually clicking through the app.
+FrameBoard is a product-state review board for React and React Native apps. It renders real screen components against fixture states on a Figma-style canvas, so teams can review screens, device presets, responsive layouts, themes, app-shell previews, and screenshot exports without manually clicking through an app.
 
 FrameBoard is pre-release and not published to npm yet.
+
+## Website And Demo
+
+The GitHub Pages build publishes one React app as a static artifact. The root route is the library website; the example route renders that same website inside FrameBoard so people can see the pattern in action.
+
+- Public site: `https://muhammaddadu.github.io/frameboard/`
+- Live React demo: `https://muhammaddadu.github.io/frameboard/examples/react/`
+- Focused state example: `https://muhammaddadu.github.io/frameboard/examples/react/?review=screen&galleryScreen=website&state=prompts&view=selected&zoom=75&device=responsive`
+- Local demo: `pnpm dev:react`
 
 ## Why FrameBoard?
 
 Modern apps have many states that are hard to review consistently: loading, empty, error, permission denied, processing, long content, dark mode, tablet layouts, and app-shell chrome. FrameBoard makes those states visible as artboards.
 
-## How It Differs From Storybook
+Storybook is excellent for component documentation and controls. FrameBoard is narrower: it focuses on whole screen states, device presets, app-shell previews, and product review boards. It is meant to answer, "What does every important screen state look like right now?"
 
-Storybook is excellent for component documentation and interactive component controls. FrameBoard is narrower: it focuses on whole screen states, device presets, app-shell previews, and product review boards. It is meant to answer, "What does every important screen state look like right now?"
+## What It Supports
+
+- Product boards with every registered screen state
+- Focused single-state review
+- Device presets for phone, tablet, responsive, and desktop layouts
+- Configurable toolbar controls for focused demos or internal review boards
+- Light, dark, and system theme review
+- Optional app-shell rendering for navigation chrome
+- Review notes for visual QA passes
+- PNG export for individual artboards or full screen-state sets
+- React and React Native / Expo renderers
 
 ## Packages
 
-- `@frameboard/core`: framework-agnostic types, device presets, registry helpers, validation, and screenshot filename helpers.
-- `@frameboard/react`: DOM React renderer with canvas UI and PNG export.
-- `@frameboard/react-native`: React Native / Expo renderer with responsive dimension overrides and native-style device frames.
+| Package | Purpose |
+| --- | --- |
+| `@frameboard/core` | Framework-agnostic types, device presets, registry helpers, validation, and screenshot filename helpers. |
+| `@frameboard/react` | DOM React renderer with canvas UI and PNG export. |
+| `@frameboard/react-native` | React Native / Expo renderer with responsive dimension overrides and native-style device frames. |
 
 ## Local Setup
 
@@ -49,7 +70,13 @@ Build the GitHub Pages demo:
 pnpm build:pages
 ```
 
-The Pages workflow publishes the React demo from `examples/react-app/dist`. In the GitHub repository settings, set Pages to deploy from GitHub Actions.
+Preview the GitHub Pages output locally:
+
+```bash
+pnpm docs:serve
+```
+
+In the GitHub repository settings, set Pages to deploy from GitHub Actions. The Pages workflow builds the packages, builds the React example with the correct project base path, and deploys `pages-dist`.
 
 ## Installation
 
@@ -66,6 +93,19 @@ pnpm add @frameboard/react-native @frameboard/core
 ```
 
 ## React Quickstart
+
+FrameBoard gives the best results when screens can be rendered from fixture props. If a screen currently fetches data, reads global state directly, or performs side effects while rendering, refactor the screen boundary first: keep data loading and mutations above the screen, pass state in through props, and register deterministic fixtures in the board.
+
+Use this prompt with a coding agent inside an existing project:
+
+```text
+Install FrameBoard in this project.
+Audit the codebase and identify the highest-value product screens to review.
+Refactor those screens so their visual state comes from top-level props instead of hidden fetches, storage reads, navigation side effects, or global mutations.
+Create deterministic fixtures for loading, empty, error, permission, success, processing, long content, responsive, and dark-mode states.
+Expose a private FrameBoard route that renders the selected screens inside the real app shell where useful.
+Document how future screens and fixture states should be added.
+```
 
 ```tsx
 import { FrameBoard, type FrameBoardReactScreen } from '@frameboard/react';
@@ -138,18 +178,19 @@ export function ScreenReview() {
 
 ## Documentation
 
-- [Getting Started](docs/getting-started.md)
-- [Architecture](docs/architecture.md)
-- [React](docs/react.md)
-- [React Native](docs/react-native.md)
-- [Expo](docs/expo.md)
-- [Fixtures](docs/fixtures.md)
-- [Device Presets](docs/device-presets.md)
-- [Responsive Dimensions](docs/responsive-dimensions.md)
-- [Theming](docs/theming.md)
-- [App Shells](docs/app-shells.md)
-- [Screenshot Export](docs/screenshot-export.md)
-- [Releasing](docs/releasing.md)
+- [Docs Index](docs/README.md)
+- [Getting Started](docs/start/getting-started.md)
+- [Architecture](docs/project/architecture.md)
+- [React](docs/renderers/react.md)
+- [React Native](docs/renderers/react-native.md)
+- [Expo](docs/renderers/expo.md)
+- [Fixtures](docs/guides/fixtures.md)
+- [Device Presets](docs/reference/device-presets.md)
+- [Responsive Dimensions](docs/reference/responsive-dimensions.md)
+- [Theming](docs/guides/theming.md)
+- [App Shells](docs/guides/app-shells.md)
+- [Screenshot Export](docs/guides/screenshot-export.md)
+- [Releasing](docs/project/releasing.md)
 
 ## Roadmap
 

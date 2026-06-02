@@ -2,6 +2,8 @@
 
 Fixtures are props that render a specific product state.
 
+The most useful FrameBoard screens have a clean boundary: product state comes from top-level props, and the fixture chooses those props. Avoid hiding loading, empty, error, or permission behavior behind fetch hooks that run automatically during render. Keep those hooks in a container, then register the presentational screen in FrameBoard.
+
 ## Good State Names
 
 Prefer durable product state names:

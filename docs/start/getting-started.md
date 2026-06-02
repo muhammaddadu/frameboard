@@ -2,6 +2,19 @@
 
 FrameBoard renders registered screen components against fixture states on a review canvas.
 
+For an existing app, start by making important screens fixture-friendly. The screen should receive the data that changes its visual state through props, while data loading, mutations, navigation, analytics, and storage stay outside the fixture-rendered component.
+
+Agent prompt:
+
+```text
+Install FrameBoard in this project.
+Audit the codebase and identify the highest-value product screens to review.
+Refactor those screens so their visual state comes from top-level props instead of hidden fetches, storage reads, navigation side effects, or global mutations.
+Create deterministic fixtures for loading, empty, error, permission, success, processing, long content, responsive, and dark-mode states.
+Expose a private FrameBoard route that renders the selected screens inside the real app shell where useful.
+Document how future screens and fixture states should be added.
+```
+
 ## Install
 
 FrameBoard is pre-release and not published yet. After publishing:

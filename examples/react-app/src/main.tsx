@@ -1,87 +1,50 @@
+import { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { FrameBoard, type FrameBoardReactScreen } from '@frameboard/react';
+import { FrameBoard } from '@frameboard/react';
 import '@frameboard/react/styles.css';
 import './styles.css';
+import { SiteAppShell } from './SiteShell';
+import { WebsitePage } from './SitePages';
+import { screens } from './frameboardScreens';
+import { readParamsFromLocation, routeFromPathname, routeFromState, writeParamsToLocation } from './routing';
+import type { DemoFrameBoardParams } from './types';
 
-type DemoProps = {
-  body: string;
-  eyebrow: string;
-  items?: string[];
-  tone?: 'calm' | 'warning' | 'success';
-};
+function DemoFrameBoard() {
+  const initialParams = useMemo(() => readParamsFromLocation(), []);
+  const [params, setParams] = useState<DemoFrameBoardParams>(initialParams);
 
-function DemoScreen({ body, eyebrow, items = [], tone = 'calm' }: DemoProps) {
   return (
-    <main className={`demo-screen demo-screen-${tone}`}>
-      <header>
-        <p>{eyebrow}</p>
-        <h1>{body}</h1>
-      </header>
-      <section>
-        {items.length > 0 ? (
-          items.map((item) => <article key={item}>{item}</article>)
-        ) : (
-          <div className="demo-empty">Nothing to review yet.</div>
-        )}
-      </section>
-    </main>
+    <FrameBoard
+      defaultDeviceId='responsive'
+      onParamsChange={(nextParams) => {
+        setParams(nextParams);
+        writeParamsToLocation(nextParams);
+      }}
+      params={params}
+      renderAppShell={({ children, state }) => (
+        <div className='example-shell'>
+          <SiteAppShell activeRoute={routeFromState(state)}>
+            {children}
+          </SiteAppShell>
+        </div>
+      )}
+      screens={screens}
+      subtitle='The FrameBoard website reviewed as real routed screens.'
+    />
   );
 }
 
-const screens: FrameBoardReactScreen<DemoProps>[] = [
-  {
-    component: DemoScreen,
-    description: 'Home states for first-run, populated, and recovery paths.',
-    id: 'home',
-    name: 'Home',
-    states: [
-      {
-        id: 'loading',
-        name: 'Loading',
-        props: { body: 'Loading your workspace', eyebrow: 'Home' },
-      },
-      {
-        id: 'empty',
-        name: 'Empty',
-        props: { body: 'Start by adding one file', eyebrow: 'Home' },
-      },
-      {
-        id: 'documentsExist',
-        name: 'Documents Exist',
-        props: {
-          body: 'Three files need attention',
-          eyebrow: 'Home',
-          items: ['Passport renewal', 'Energy bill', 'Tenancy agreement'],
-          tone: 'success',
-        },
-      },
-    ],
-  },
-  {
-    component: DemoScreen,
-    description: 'Capture states for permission, processing, and saved outcomes.',
-    id: 'capture',
-    name: 'Capture',
-    states: [
-      {
-        id: 'ready',
-        props: { body: 'Save something new', eyebrow: 'Capture', items: ['Scan', 'Photo', 'File'] },
-      },
-      {
-        id: 'permissionDenied',
-        props: { body: 'Camera permission is needed', eyebrow: 'Capture', tone: 'warning' },
-      },
-      {
-        id: 'processing',
-        props: { body: 'Checking your file', eyebrow: 'Capture' },
-      },
-    ],
-  },
-];
+function App() {
+  const isExampleRoute = window.location.pathname.includes('/examples/react');
+  const activeRoute = routeFromPathname(window.location.pathname);
 
-createRoot(document.getElementById('root')!).render(
-  <FrameBoard
-    renderAppShell={({ children }) => <div className="demo-shell">{children}</div>}
-    screens={screens}
-  />,
-);
+  return isExampleRoute ? (
+    <DemoFrameBoard />
+  ) : (
+    <SiteAppShell activeRoute={activeRoute}>
+      <WebsitePage route={activeRoute} />
+    </SiteAppShell>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(<App />);

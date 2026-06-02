@@ -13,7 +13,7 @@ describe('FrameBoard core registry', () => {
       defaultDeviceId: 'iphone-15',
       devices: defaultFrameBoardDevices,
       params: {
-        device: 'tablet',
+        device: 'responsive',
         galleryScreen: 'home',
         review: 'screen',
         state: 'empty',
@@ -35,7 +35,7 @@ describe('FrameBoard core registry', () => {
     });
 
     expect(normalized.reviewMode).toBe('screen');
-    expect(normalized.selectedDevice.id).toBe('tablet');
+    expect(normalized.selectedDevice.id).toBe('responsive');
     expect(normalized.selectedScreen.id).toBe('home');
     expect(normalized.selectedState.id).toBe('empty');
     expect(normalized.showAllStates).toBe(false);
@@ -65,6 +65,32 @@ describe('FrameBoard core registry', () => {
     expect(normalized.selectedDevice.id).toBe('large-android');
     expect(normalized.selectedState.id).toBe('populated');
     expect(normalized.themeMode).toBe('system');
+  });
+
+  it('applies URL dimensions to the responsive preset', () => {
+    const normalized = normalizeFrameBoardParams({
+      currentThemeMode: 'light',
+      defaultDeviceId: 'responsive',
+      devices: defaultFrameBoardDevices,
+      params: {
+        device: 'responsive',
+        height: '720',
+        width: '1280',
+      },
+      screens: [
+        {
+          component: 'Dashboard',
+          id: 'dashboard',
+          name: 'Dashboard',
+          states: [{ id: 'ready' }],
+        },
+      ],
+    });
+
+    expect(normalized.selectedDevice.id).toBe('responsive');
+    expect(normalized.selectedDevice.width).toBe(1280);
+    expect(normalized.selectedDevice.height).toBe(720);
+    expect(normalized.selectedDevice.detail).toBe('1280 x 720');
   });
 
   it('builds predictable screenshot filenames', () => {

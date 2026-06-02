@@ -13,6 +13,7 @@ import {
   Frame,
   Grid3X3,
   Maximize2,
+  Monitor,
   Minus,
   Moon,
   Plus,
@@ -22,7 +23,7 @@ import {
   Sun,
 } from 'lucide-react-native';
 import {
-  defaultFrameBoardDevices,
+  defaultFrameBoardMobileDevices,
   frameBoardZoomLevels,
   getDefaultFrameBoardStateCaption,
   getFrameBoardArtboardId,
@@ -98,7 +99,7 @@ const defaultNotes = [
 export function FrameBoard<TMeta = unknown>({
   colors: colorsProp,
   defaultDeviceId = 'iphone-15',
-  devices = defaultFrameBoardDevices,
+  devices = defaultFrameBoardMobileDevices,
   isDark = false,
   notes = defaultNotes,
   onParamsChange,
@@ -491,7 +492,7 @@ function Toolbar({
         <ToolButton
           active={nextDevice.id === device.id}
           colors={colors}
-          icon={<Smartphone color={nextDevice.id === device.id ? colors.primary : colors.text} size={14} />}
+          icon={<DeviceIcon color={nextDevice.id === device.id ? colors.primary : colors.text} device={nextDevice} />}
           key={nextDevice.id}
           label={nextDevice.name}
           onPress={() => onDevice(nextDevice)}
@@ -506,6 +507,12 @@ function Toolbar({
       <ToolButton colors={colors} label="Export screen" onPress={onExportScreen} />
     </ScrollView>
   );
+}
+
+function DeviceIcon({ color, device }: { color: string; device: FrameBoardDevice }) {
+  return device.kind === 'desktop' || device.kind === 'responsive'
+    ? <Monitor color={color} size={14} />
+    : <Smartphone color={color} size={14} />;
 }
 
 function ToolButton({

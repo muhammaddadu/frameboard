@@ -1,6 +1,6 @@
 # Contributing Notes
 
-The canonical contributor guide is [../CONTRIBUTING.md](../CONTRIBUTING.md).
+The canonical contributor guide is [../../CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 Use this page as a short package-boundary reminder:
 

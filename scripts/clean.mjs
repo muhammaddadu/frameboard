@@ -6,6 +6,7 @@ const paths = [
   'packages/react-native/dist',
   'examples/react-app/dist',
   'examples/react-native-app/.expo',
+  'pages-dist',
   'coverage',
 ];
 

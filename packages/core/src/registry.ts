@@ -41,6 +41,26 @@ export function findFrameBoardZoomIndex(zoomParam: string | undefined, fallbackI
   return nextIndex >= 0 ? nextIndex : fallbackIndex;
 }
 
+function readFrameBoardDimensionParam(value: string | undefined, fallback: number): number {
+  if (!value) return fallback;
+
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return fallback;
+
+  return Math.min(Math.max(parsed, 320), 2560);
+}
+
+function applyResponsiveDimensions(device: FrameBoardDevice, params: FrameBoardParams): FrameBoardDevice {
+  if (device.kind !== 'responsive') return device;
+
+  return {
+    ...device,
+    detail: `${readFrameBoardDimensionParam(readFrameBoardParam(params.width), device.width)} x ${readFrameBoardDimensionParam(readFrameBoardParam(params.height), device.height)}`,
+    height: readFrameBoardDimensionParam(readFrameBoardParam(params.height), device.height),
+    width: readFrameBoardDimensionParam(readFrameBoardParam(params.width), device.width),
+  };
+}
+
 export function normalizeFrameBoardParams<TComponent, TProps, TMeta>({
   currentThemeMode,
   defaultDeviceId,
@@ -76,15 +96,19 @@ export function normalizeFrameBoardParams<TComponent, TProps, TMeta>({
   const themeParam = readFrameBoardParam(params.theme);
   const reviewMode: FrameBoardReviewMode =
     readFrameBoardParam(params.review) === 'screen' ? 'screen' : 'board';
-
-  return {
-    reviewMode,
-    searchQuery: readFrameBoardParam(params.q) ?? '',
-    selectedDevice: findFrameBoardDevice(
+  const selectedDevice = applyResponsiveDimensions(
+    findFrameBoardDevice(
       devices,
       readFrameBoardParam(params.device),
       defaultDeviceId,
     ),
+    params,
+  );
+
+  return {
+    reviewMode,
+    searchQuery: readFrameBoardParam(params.q) ?? '',
+    selectedDevice,
     selectedScreen,
     selectedState,
     showAllStates: readFrameBoardParam(params.view) !== 'selected',

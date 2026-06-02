@@ -15,6 +15,7 @@ export type FrameBoardDevice = {
   id: string;
   name: string;
   detail?: string;
+  kind?: 'mobile' | 'tablet' | 'desktop' | 'responsive';
   width: number;
   height: number;
 };
@@ -63,6 +64,7 @@ export type FrameBoardParams = {
   chrome?: string | string[];
   device?: string | string[];
   galleryScreen?: string | string[];
+  height?: string | string[];
   notes?: string | string[];
   q?: string | string[];
   review?: string | string[];
@@ -70,6 +72,7 @@ export type FrameBoardParams = {
   state?: string | string[];
   theme?: string | string[];
   view?: string | string[];
+  width?: string | string[];
   zoom?: string | string[];
 };
 
@@ -77,12 +80,14 @@ export type FrameBoardParamSnapshot = {
   chrome: FrameBoardChromeMode;
   device: string;
   galleryScreen: string;
+  height?: string;
   notes: FrameBoardNotesMode;
   q?: string;
   review: FrameBoardReviewMode;
   state: string;
   theme: FrameBoardThemeMode;
   view: FrameBoardViewMode;
+  width?: string;
   zoom: string;
 };
 

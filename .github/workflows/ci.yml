@@ -54,3 +54,12 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Build Pages artifact
+        run: pnpm build:pages
+
+      - name: Verify Pages artifact
+        run: |
+          test -f pages-dist/index.html
+          test -f pages-dist/examples/react/index.html
+          test -d pages-dist/assets

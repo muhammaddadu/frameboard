@@ -20,17 +20,20 @@ export function NativeDeviceFrame({
   device: FrameBoardDevice;
   dimensions: ScaledSize;
 }) {
+  const isLargeCanvas = device.kind === 'desktop' || device.kind === 'responsive';
+  const isTablet = device.kind === 'tablet' || device.id === 'tablet';
+
   return (
     <View
       style={{
         backgroundColor: colors.paper,
         borderColor: colors.border,
-        borderRadius: device.id === 'tablet' ? 22 : 28,
+        borderRadius: isLargeCanvas ? 12 : isTablet ? 22 : 28,
         borderWidth: 1,
         boxShadow: '0 8px 24px rgba(31, 29, 43, 0.14)',
         height: device.height,
         overflow: 'hidden',
-        padding: device.id === 'tablet' ? 12 : 10,
+        padding: isLargeCanvas ? 8 : isTablet ? 12 : 10,
         width: device.width,
       }}
     >
@@ -38,7 +41,7 @@ export function NativeDeviceFrame({
         style={{
           backgroundColor: colors.card,
           borderColor: colors.selectedSoft,
-          borderRadius: device.id === 'tablet' ? 14 : 20,
+          borderRadius: isLargeCanvas ? 8 : isTablet ? 14 : 20,
           borderWidth: 1,
           flex: 1,
           minHeight: 0,

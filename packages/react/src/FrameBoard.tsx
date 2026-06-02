@@ -1,6 +1,7 @@
 import { useMemo, useState, type ComponentType } from 'react';
 import {
   Download,
+  Monitor,
   Frame,
   Grid3X3,
   Maximize2,
@@ -30,7 +31,7 @@ import {
   type FrameBoardThemeMode,
 } from '@frameboard/core';
 import { exportElementAsPng } from './exportPng';
-import { type FrameBoardReactProps, type FrameBoardReactScreen } from './types';
+import { type FrameBoardReactControls, type FrameBoardReactProps, type FrameBoardReactScreen } from './types';
 
 const defaultColors: FrameBoardColors = {
   background: '#F6F4EF',
@@ -75,8 +76,20 @@ const defaultNotes = [
   },
 ];
 
+const defaultControls: Required<FrameBoardReactControls> = {
+  chrome: true,
+  devices: true,
+  export: true,
+  notes: true,
+  reviewMode: true,
+  states: true,
+  theme: true,
+  zoom: true,
+};
+
 export function FrameBoard<TMeta = unknown>({
   colors: colorsProp,
+  controls: controlsProp,
   defaultDeviceId = 'iphone-15',
   devices = defaultFrameBoardDevices,
   isDark = false,
@@ -95,6 +108,7 @@ export function FrameBoard<TMeta = unknown>({
   const activeParams = params ?? localParams;
   const themeMode = controlledThemeMode ?? localThemeMode;
   const colors = colorsProp ?? (isDark || themeMode === 'dark' ? darkColors : defaultColors);
+  const controls = { ...defaultControls, ...controlsProp };
   const normalized = useMemo(
     () => normalizeFrameBoardParams({
       currentThemeMode: themeMode,
@@ -112,12 +126,14 @@ export function FrameBoard<TMeta = unknown>({
       chrome: normalized.showAppShell ? 'app' : 'content',
       device: normalized.selectedDevice.id,
       galleryScreen: normalized.selectedScreen.id,
+      height: normalized.selectedDevice.kind === 'responsive' ? String(normalized.selectedDevice.height) : undefined,
       notes: normalized.showReviewNotes ? 'show' : 'hide',
       q: normalized.searchQuery || undefined,
       review: normalized.reviewMode,
       state: normalized.selectedState.id,
       theme: normalized.themeMode,
       view: normalized.showAllStates ? 'all' : 'selected',
+      width: normalized.selectedDevice.kind === 'responsive' ? String(normalized.selectedDevice.width) : undefined,
       zoom: String(Math.round(frameBoardZoomLevels[normalized.zoomIndex] * 100)),
       ...nextParams,
     };
@@ -170,6 +186,7 @@ export function FrameBoard<TMeta = unknown>({
   };
 
   const zoom = frameBoardZoomLevels[normalized.zoomIndex];
+  const showReviewNotes = controls.notes && normalized.showReviewNotes;
   const shownStates = normalized.showAllStates
     ? normalized.selectedScreen.states.filter((state) => state.id.toLowerCase().includes(normalized.searchQuery.toLowerCase()))
     : [normalized.selectedState];
@@ -238,6 +255,7 @@ export function FrameBoard<TMeta = unknown>({
         <Toolbar
           device={normalized.selectedDevice}
           devices={devices}
+          controls={controls}
           isDark={isDark}
           onDevice={(device) => setParams({ device: device.id })}
           onExportScreen={exportScreenStates}
@@ -245,13 +263,14 @@ export function FrameBoard<TMeta = unknown>({
           onMode={setThemeMode}
           onNotes={() => setParams({ notes: normalized.showReviewNotes ? 'hide' : 'show' })}
           onReview={(review) => setParams({ review, view: review === 'board' ? 'all' : normalized.showAllStates ? 'all' : 'selected' })}
+          onResponsiveSize={(size) => setParams(size)}
           onShell={() => setParams({ chrome: normalized.showAppShell ? 'content' : 'app' })}
           onStates={() => setParams({ review: 'screen', view: normalized.showAllStates ? 'selected' : 'all' })}
           onZoom={(index) => setParams({ zoom: String(Math.round(frameBoardZoomLevels[index] * 100)) })}
           reviewMode={normalized.reviewMode}
           showAllStates={normalized.showAllStates}
           showAppShell={normalized.showAppShell}
-          showReviewNotes={normalized.showReviewNotes}
+          showReviewNotes={showReviewNotes}
           themeMode={normalized.themeMode}
           zoomIndex={normalized.zoomIndex}
         />
@@ -280,7 +299,7 @@ export function FrameBoard<TMeta = unknown>({
                           renderAppShell={renderAppShell}
                           screen={screen}
                           showAppShell={normalized.showAppShell}
-                          showReviewNotes={normalized.showReviewNotes}
+                          showReviewNotes={showReviewNotes}
                           state={state}
                           themeMode={normalized.themeMode}
                           zoom={zoom}
@@ -302,7 +321,7 @@ export function FrameBoard<TMeta = unknown>({
                   renderAppShell={renderAppShell}
                   screen={normalized.selectedScreen}
                   showAppShell={normalized.showAppShell}
-                  showReviewNotes={normalized.showReviewNotes}
+                  showReviewNotes={showReviewNotes}
                   state={state}
                   themeMode={normalized.themeMode}
                   zoom={zoom}
@@ -311,7 +330,7 @@ export function FrameBoard<TMeta = unknown>({
             </div>
           )}
         </div>
-        {normalized.showReviewNotes ? (
+        {showReviewNotes ? (
           <div className='fb-notes'>
             <h2>Notes</h2>
             {notes.map((note) => (
@@ -331,6 +350,7 @@ export function FrameBoard<TMeta = unknown>({
 }
 
 function Toolbar({
+  controls,
   device,
   devices,
   isDark,
@@ -340,6 +360,7 @@ function Toolbar({
   onMode,
   onNotes,
   onReview,
+  onResponsiveSize,
   onShell,
   onStates,
   onZoom,
@@ -350,6 +371,7 @@ function Toolbar({
   themeMode,
   zoomIndex,
 }: {
+  controls: Required<FrameBoardReactControls>;
   device: FrameBoardDevice;
   devices: FrameBoardDevice[];
   isDark: boolean;
@@ -359,6 +381,7 @@ function Toolbar({
   onMode: (mode: FrameBoardThemeMode) => void;
   onNotes: () => void;
   onReview: (mode: FrameBoardReviewMode) => void;
+  onResponsiveSize: (size: { height?: string; width?: string }) => void;
   onShell: () => void;
   onStates: () => void;
   onZoom: (index: number) => void;
@@ -371,29 +394,68 @@ function Toolbar({
 }) {
   return (
     <div className='fb-toolbar'>
-      <button aria-label='Fit board' onClick={() => onZoom(0)} type='button'><Maximize2 size={15} /></button>
-      <button aria-label='Export selected artboard' onClick={onExportSelected} type='button'><Download size={15} /></button>
-      <button className={reviewMode === 'screen' ? 'active' : ''} onClick={() => onReview('screen')} type='button'>Focus View</button>
-      <button className={reviewMode === 'board' ? 'active' : ''} onClick={() => onReview('board')} type='button'><Grid3X3 size={14} /> Product Board</button>
-      <div className='fb-zoom'>
-        <button onClick={() => onZoom(Math.max(0, zoomIndex - 1))} type='button'><Minus size={14} /></button>
-        <span>{Math.round(frameBoardZoomLevels[zoomIndex] * 100)}%</span>
-        <button onClick={() => onZoom(Math.min(frameBoardZoomLevels.length - 1, zoomIndex + 1))} type='button'><Plus size={14} /></button>
-      </div>
-      {devices.map((nextDevice) => (
+      {controls.zoom ? <button aria-label='Fit board' onClick={() => onZoom(0)} type='button'><Maximize2 size={15} /></button> : null}
+      {controls.export ? <button aria-label='Export selected artboard' onClick={onExportSelected} type='button'><Download size={15} /></button> : null}
+      {controls.reviewMode ? (
+        <>
+          <button className={reviewMode === 'screen' ? 'active' : ''} onClick={() => onReview('screen')} type='button'>Focus View</button>
+          <button className={reviewMode === 'board' ? 'active' : ''} onClick={() => onReview('board')} type='button'><Grid3X3 size={14} /> Product Board</button>
+        </>
+      ) : null}
+      {controls.zoom ? (
+        <div className='fb-zoom'>
+          <button onClick={() => onZoom(Math.max(0, zoomIndex - 1))} type='button'><Minus size={14} /></button>
+          <span>{Math.round(frameBoardZoomLevels[zoomIndex] * 100)}%</span>
+          <button onClick={() => onZoom(Math.min(frameBoardZoomLevels.length - 1, zoomIndex + 1))} type='button'><Plus size={14} /></button>
+        </div>
+      ) : null}
+      {controls.devices ? devices.map((nextDevice) => (
         <button className={nextDevice.id === device.id ? 'active' : ''} key={nextDevice.id} onClick={() => onDevice(nextDevice)} type='button'>
-          <Smartphone size={14} /> {nextDevice.name}
+          <DeviceIcon device={nextDevice} /> {nextDevice.name}
         </button>
-      ))}
-      <button className={themeMode === 'light' ? 'active' : ''} onClick={() => onMode('light')} type='button'><Sun size={14} /> Light</button>
-      <button className={themeMode === 'dark' ? 'active' : ''} onClick={() => onMode('dark')} type='button'><Moon size={14} /> Dark</button>
-      <button className={themeMode === 'system' ? 'active' : ''} onClick={() => onMode('system')} type='button'>System {isDark ? 'dark' : 'light'}</button>
-      <button className={showAllStates ? 'active' : ''} onClick={onStates} type='button'>{showAllStates ? 'Show all states' : 'Selected state'}</button>
-      <button className={showAppShell ? 'active' : ''} onClick={onShell} type='button'>{showAppShell ? 'App shell' : 'Content only'}</button>
-      <button className={showReviewNotes ? 'active' : ''} onClick={onNotes} type='button'><StickyNote size={14} /> Notes</button>
-      <button onClick={onExportScreen} type='button'>Export screen states</button>
+      )) : null}
+      {controls.devices && device.kind === 'responsive' ? (
+        <div className='fb-size-control' aria-label='Responsive viewport size'>
+          <input
+            aria-label='Responsive width'
+            max={2560}
+            min={320}
+            onChange={(event) => onResponsiveSize({ width: event.currentTarget.value })}
+            step={10}
+            type='number'
+            value={device.width}
+          />
+          <span>x</span>
+          <input
+            aria-label='Responsive height'
+            max={2560}
+            min={320}
+            onChange={(event) => onResponsiveSize({ height: event.currentTarget.value })}
+            step={10}
+            type='number'
+            value={device.height}
+          />
+        </div>
+      ) : null}
+      {controls.theme ? (
+        <>
+          <button className={themeMode === 'light' ? 'active' : ''} onClick={() => onMode('light')} type='button'><Sun size={14} /> Light</button>
+          <button className={themeMode === 'dark' ? 'active' : ''} onClick={() => onMode('dark')} type='button'><Moon size={14} /> Dark</button>
+          <button className={themeMode === 'system' ? 'active' : ''} onClick={() => onMode('system')} type='button'>System {isDark ? 'dark' : 'light'}</button>
+        </>
+      ) : null}
+      {controls.states ? <button className={showAllStates ? 'active' : ''} onClick={onStates} type='button'>{showAllStates ? 'Show all states' : 'Selected state'}</button> : null}
+      {controls.chrome ? <button className={showAppShell ? 'active' : ''} onClick={onShell} type='button'>{showAppShell ? 'App shell' : 'Content only'}</button> : null}
+      {controls.notes ? <button className={showReviewNotes ? 'active' : ''} onClick={onNotes} type='button'><StickyNote size={14} /> Notes</button> : null}
+      {controls.export ? <button onClick={onExportScreen} type='button'>Export screen states</button> : null}
     </div>
   );
+}
+
+function DeviceIcon({ device }: { device: FrameBoardDevice }) {
+  return device.kind === 'desktop' || device.kind === 'responsive'
+    ? <Monitor size={14} />
+    : <Smartphone size={14} />;
 }
 
 function Artboard<TMeta>({
@@ -444,7 +506,7 @@ function Artboard<TMeta>({
         <small>{device.name} · {device.detail ?? `${device.width} x ${device.height}`} · {modeLabel} · {showAppShell ? 'App shell' : 'Content only'}</small>
       </div>
       <div
-        className={active ? 'fb-device-outline active' : 'fb-device-outline'}
+        className={`fb-device-outline fb-device-${device.kind ?? 'mobile'}${active ? ' active' : ''}`}
         style={{ height: device.height * zoom + 4, width: device.width * zoom + 4 }}
       >
         <div
@@ -458,7 +520,7 @@ function Artboard<TMeta>({
           <div className='fb-device-frame'>
             <div className='fb-device-screen'>
               {showAppShell && renderAppShell
-                ? renderAppShell({ children: rendered, screen })
+                ? renderAppShell({ children: rendered, screen, state })
                 : rendered}
             </div>
           </div>
