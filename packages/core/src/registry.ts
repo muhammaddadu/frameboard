@@ -6,7 +6,7 @@ import {
   type FrameBoardState,
   type FrameBoardThemeMode,
   type NormalizedFrameBoardParams,
-} from './types.js';
+} from './types';
 
 export const frameBoardZoomLevels = [0.5, 0.75, 1, 1.25] as const;
 

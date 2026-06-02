@@ -1,6 +1,6 @@
-export { FrameBoard } from './FrameBoard.js';
-export { exportElementAsPng } from './exportPng.js';
+export { FrameBoard } from './FrameBoard';
+export { exportElementAsPng } from './exportPng';
 export type {
   FrameBoardReactProps,
   FrameBoardReactScreen,
-} from './types.js';
+} from './types';

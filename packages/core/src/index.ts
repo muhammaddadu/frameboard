@@ -1,9 +1,9 @@
-export { defaultFrameBoardDevices } from './devices.js';
+export { defaultFrameBoardDevices } from './devices';
 export {
   getFrameBoardArtboardId,
   getFrameBoardScreenshotFilename,
   slugFrameBoardPart,
-} from './export.js';
+} from './export';
 export {
   findFrameBoardDevice,
   findFrameBoardZoomIndex,
@@ -14,7 +14,7 @@ export {
   normalizeFrameBoardParams,
   noteCountForFrameBoardState,
   readFrameBoardParam,
-} from './registry.js';
+} from './registry';
 export type {
   FrameBoardAuditItem,
   FrameBoardChromeMode,
@@ -32,4 +32,4 @@ export type {
   FrameBoardThemeMode,
   FrameBoardViewMode,
   NormalizedFrameBoardParams,
-} from './types.js';
+} from './types';

@@ -1,4 +1,4 @@
 export {
   ResponsiveDimensionsProvider,
   useResponsiveDimensions,
-} from './ResponsiveDimensionsProvider.js';
+} from './ResponsiveDimensionsProvider';

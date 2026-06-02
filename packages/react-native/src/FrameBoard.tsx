@@ -39,12 +39,12 @@ import {
   type FrameBoardThemeMode,
   type NormalizedFrameBoardParams,
 } from '@frameboard/core';
-import { NativeDeviceFrame } from './NativeDeviceFrame.js';
-import { exportElementAsPng } from './exportPng.js';
+import { NativeDeviceFrame } from './NativeDeviceFrame';
+import { exportElementAsPng } from './exportPng';
 import {
   type FrameBoardNativeProps,
   type FrameBoardNativeScreen,
-} from './types.js';
+} from './types';
 
 const defaultColors: FrameBoardColors = {
   background: '#F6F4EF',

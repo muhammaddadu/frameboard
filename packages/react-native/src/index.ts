@@ -1,13 +1,13 @@
-export { FrameBoard } from './FrameBoard.js';
-export { NativeDeviceFrame } from './NativeDeviceFrame.js';
+export { FrameBoard } from './FrameBoard';
+export { NativeDeviceFrame } from './NativeDeviceFrame';
 export {
   ResponsiveDimensionsProvider,
   toScaledSize,
   useResponsiveDimensions,
-} from './ResponsiveDimensionsProvider.js';
+} from './ResponsiveDimensionsProvider';
 export type {
   FrameBoardNativeProps,
   FrameBoardNativeRenderContext,
   FrameBoardNativeScreen,
-} from './types.js';
+} from './types';
 export * from '@frameboard/core';

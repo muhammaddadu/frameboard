@@ -7,7 +7,7 @@ import {
   type FrameBoardColors,
   type FrameBoardDevice,
 } from '@frameboard/core';
-import { ResponsiveDimensionsProvider } from './ResponsiveDimensionsProvider.js';
+import { ResponsiveDimensionsProvider } from './ResponsiveDimensionsProvider';
 
 export function NativeDeviceFrame({
   children,

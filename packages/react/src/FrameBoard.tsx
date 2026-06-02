@@ -30,8 +30,8 @@ import {
   type FrameBoardState,
   type FrameBoardThemeMode,
 } from '@frameboard/core';
-import { exportElementAsPng } from './exportPng.js';
-import { type FrameBoardReactProps, type FrameBoardReactScreen } from './types.js';
+import { exportElementAsPng } from './exportPng';
+import { type FrameBoardReactProps, type FrameBoardReactScreen } from './types';
 import './styles.css';
 
 const defaultColors: FrameBoardColors = {

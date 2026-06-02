@@ -1,4 +1,4 @@
-import { type FrameBoardDevice } from './types.js';
+import { type FrameBoardDevice } from './types';
 
 export const defaultFrameBoardDevices: FrameBoardDevice[] = [
   {

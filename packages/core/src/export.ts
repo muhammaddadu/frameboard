@@ -1,4 +1,4 @@
-import { type FrameBoardExportTarget } from './types.js';
+import { type FrameBoardExportTarget } from './types';
 
 export function slugFrameBoardPart(value: string): string {
   return value
