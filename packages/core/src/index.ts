@@ -5,6 +5,10 @@ export {
   slugFrameBoardPart,
 } from './export';
 export {
+  assertValidFrameBoardConfig,
+  validateFrameBoardConfig,
+} from './validation';
+export {
   findFrameBoardDevice,
   findFrameBoardZoomIndex,
   frameBoardZoomLevels,

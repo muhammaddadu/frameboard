@@ -1,8 +1,8 @@
 export { FrameBoard } from './FrameBoard';
 export { NativeDeviceFrame } from './NativeDeviceFrame';
+export { toScaledSize, type FrameBoardScaledSize } from './dimensions';
 export {
   ResponsiveDimensionsProvider,
-  toScaledSize,
   useResponsiveDimensions,
 } from './ResponsiveDimensionsProvider';
 export type {

@@ -6,5 +6,6 @@ build/
 .expo/
 .turbo/
 coverage/
+.eslintcache
 .DS_Store
 *.log

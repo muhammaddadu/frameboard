@@ -8,6 +8,12 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@frameboard/core": ["packages/core/src"],
+      "@frameboard/react": ["packages/react/src"],
+      "@frameboard/react-native": ["packages/react-native/src"]
+    },
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

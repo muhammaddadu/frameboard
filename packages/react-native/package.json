@@ -1,20 +1,48 @@
 {
   "name": "@frameboard/react-native",
   "version": "0.1.0",
-  "private": true,
   "description": "React Native and Expo renderer for FrameBoard.",
+  "keywords": [
+    "frameboard",
+    "react-native",
+    "expo",
+    "screen-states",
+    "fixtures",
+    "design-review"
+  ],
+  "license": "MIT",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frameboard/frameboard.git",
+    "directory": "packages/react-native"
+  },
+  "homepage": "https://github.com/frameboard/frameboard#readme",
+  "bugs": {
+    "url": "https://github.com/frameboard/frameboard/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
+    "build": "pnpm --dir ../.. build:packages",
+    "clean": "node ../../scripts/clean.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest run ../../packages/react-native/tests"
   },
   "dependencies": {
     "@frameboard/core": "workspace:*",

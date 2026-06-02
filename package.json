@@ -1,13 +1,22 @@
 {
-  "name": "frameboard-workspace",
+  "name": "frameboard",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.0.9",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=11"
+  },
   "scripts": {
+    "build": "pnpm clean && pnpm build:packages && pnpm --filter @frameboard/react-app build",
+    "build:packages": "tsup && node scripts/copy-assets.mjs",
+    "clean": "node scripts/clean.mjs",
+    "dev:native": "pnpm build:packages && pnpm --filter @frameboard/react-native-app start",
+    "dev:react": "pnpm build:packages && pnpm --filter @frameboard/react-app dev",
     "typecheck": "pnpm -r --if-present typecheck",
-    "lint": "pnpm -r --if-present lint",
-    "test": "pnpm typecheck"
+    "lint": "eslint . && pnpm -r --if-present lint",
+    "test": "vitest run"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -15,7 +24,14 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@types/node": "^22.15.30",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.4",
+    "tsup": "^8.5.1",
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^4.0.15",
     "typescript": "^5.9.2"
   }
 }

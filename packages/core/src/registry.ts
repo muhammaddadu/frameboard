@@ -7,6 +7,7 @@ import {
   type FrameBoardThemeMode,
   type NormalizedFrameBoardParams,
 } from './types';
+import { assertValidFrameBoardConfig } from './validation';
 
 export const frameBoardZoomLevels = [0.5, 0.75, 1, 1.25] as const;
 
@@ -53,6 +54,8 @@ export function normalizeFrameBoardParams<TComponent, TProps, TMeta>({
   params: FrameBoardParams;
   screens: FrameBoardScreen<TComponent, TProps, TMeta>[];
 }): NormalizedFrameBoardParams<TComponent, TProps, TMeta> {
+  assertValidFrameBoardConfig({ devices, screens });
+
   const selectedScreen =
     screens.find((screen) => screen.id === (readFrameBoardParam(params.galleryScreen) ?? readFrameBoardParam(params.screen))) ??
     screens[0];

@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import {
   defaultFrameBoardDevices,
-  findFrameBoardZoomIndex,
   frameBoardZoomLevels,
   getDefaultFrameBoardStateCaption,
   getFrameBoardArtboardId,
@@ -32,7 +31,6 @@ import {
 } from '@frameboard/core';
 import { exportElementAsPng } from './exportPng';
 import { type FrameBoardReactProps, type FrameBoardReactScreen } from './types';
-import './styles.css';
 
 const defaultColors: FrameBoardColors = {
   background: '#F6F4EF',

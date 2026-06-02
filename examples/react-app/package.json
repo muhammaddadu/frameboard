@@ -5,6 +5,7 @@
   "description": "Vite React example for FrameBoard.",
   "type": "module",
   "scripts": {
+    "build": "vite build",
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"

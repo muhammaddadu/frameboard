@@ -8,24 +8,16 @@ import {
   type ScaledSize,
 } from 'react-native';
 import { type FrameBoardDimensions } from '@frameboard/core';
+import { toScaledSize } from './dimensions';
 
 const ResponsiveDimensionsContext = createContext<ScaledSize | null>(null);
-
-export function toScaledSize(dimensions: FrameBoardDimensions): ScaledSize {
-  return {
-    fontScale: dimensions.fontScale ?? 1,
-    height: dimensions.height,
-    scale: dimensions.scale ?? 2,
-    width: dimensions.width,
-  };
-}
 
 export function ResponsiveDimensionsProvider({
   children,
   value,
 }: PropsWithChildren<{ value: FrameBoardDimensions | ScaledSize }>) {
   return (
-    <ResponsiveDimensionsContext.Provider value={toScaledSize(value)}>
+    <ResponsiveDimensionsContext.Provider value={toScaledSize(value) as ScaledSize}>
       {children}
     </ResponsiveDimensionsContext.Provider>
   );
