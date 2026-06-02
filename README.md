@@ -6,6 +6,10 @@ FrameBoard is a product-state review board for React and React Native apps. It r
 
 FrameBoard packages install from npm under the `@frameboard` scope.
 
+[Website](https://muhammaddadu.github.io/frameboard/) · [Live React demo](https://muhammaddadu.github.io/frameboard/examples/react/) · [Docs](https://muhammaddadu.github.io/frameboard/docs/)
+
+![FrameBoard website and product board preview](https://muhammaddadu.github.io/frameboard/images/frameboard-hero.png)
+
 ## Website And Demo
 
 The GitHub Pages build publishes one React app as a static artifact. The root route is the library website; the example route renders that same website inside FrameBoard so people can see the pattern in action.
