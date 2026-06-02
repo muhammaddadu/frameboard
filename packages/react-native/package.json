@@ -1,21 +1,16 @@
 {
-  "name": "@frameboard/react",
-  "version": "0.0.0",
-  "description": "DOM React renderer for FrameBoard.",
+  "name": "@frameboard/react-native",
+  "version": "0.1.0",
   "private": true,
-  "license": "UNLICENSED",
+  "description": "React Native and Expo renderer for FrameBoard.",
   "type": "module",
-  "sideEffects": [
-    "./src/styles.css"
-  ],
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    },
-    "./styles.css": "./src/styles.css"
+    }
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -24,15 +19,17 @@
   "dependencies": {
     "@frameboard/core": "workspace:*",
     "html-to-image": "^1.11.13",
-    "lucide-react": "^0.468.0"
+    "lucide-react-native": "^0.468.0"
   },
   "peerDependencies": {
-    "react": "^18.3.0 || ^19.0.0",
-    "react-dom": "^18.3.0 || ^19.0.0"
+    "react": ">=18",
+    "react-native": ">=0.74",
+    "react-native-svg": ">=15"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "react-native": "^0.82.1",
     "typescript": "^5.9.2"
   }
 }
