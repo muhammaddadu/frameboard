@@ -12,10 +12,9 @@ frameboard/
     react-app/
     react-native-app/
   docs/
-  website/
 ```
 
-FrameBoard has the intended package split, two working examples, open-source project files, CI, tests, and package build output. It is close to public GitHub readiness but still needs final release decisions before npm publishing.
+FrameBoard has the intended package split, two working examples, open-source project files, CI, tests, package build output, GitHub Pages, and npm publish automation.
 
 ## Package Status
 
@@ -55,7 +54,7 @@ Supported host controls include devices, theme mode, app shell rendering, URL pa
 Current risks:
 
 - React and React Native renderers use similar APIs but have separate renderer-specific screen types
-- public API naming should receive one more review before npm publishing
+- public API naming should be reviewed before major releases
 
 ## Build/Test/Lint Status
 
@@ -93,12 +92,14 @@ Completed:
 Completed:
 
 - `.github/workflows/ci.yml`
+- `.github/workflows/pages.yml`
+- `.github/workflows/publish.yml`
 - pull request and main-branch validation
 - install/typecheck/lint/test/build automation
 - example build validation
 - package artifact validation
-
-Publishing is intentionally not configured yet.
+- GitHub Pages deployment
+- npm publishing on semver tags or manual workflow dispatch
 
 ## Documentation Gaps
 
@@ -106,12 +107,12 @@ Completed docs now cover architecture, getting started, React, React Native, Exp
 
 ## Publishing Gaps
 
-Before publishing:
+Before publishing a new version:
 
 - run final package tarball checks
-- decide versioning strategy
-- add Changesets or document a release workflow
-- decide whether to add Changesets before first npm prerelease
+- verify package versions
+- ensure `NPM_TOKEN` is configured in repository secrets
+- push a semver tag or run the `Publish` workflow manually
 
 ## Recommended Changes
 
@@ -122,10 +123,10 @@ Before publishing:
 5. Add CI that runs install, typecheck, lint, test, and build.
 6. Expand docs and example READMEs so a developer can run FrameBoard quickly.
 7. Re-run a linked-host compatibility check after changing package exports.
+8. Add Changesets if release notes and automated version PRs become necessary.
 
 ## Risks
 
 - Changing exports from `src/` to `dist/` can break local consumers unless the package is built first.
 - Bundling React Native code must keep React, React Native, Expo, and icon dependencies external.
-- Adding too much release tooling now could make the package harder to maintain before the API stabilizes.
 - Local linked host apps need package build output, so compatibility validation must run after `pnpm build`.

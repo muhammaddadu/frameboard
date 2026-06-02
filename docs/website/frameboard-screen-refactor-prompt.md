@@ -87,7 +87,9 @@ Important:
 After the screen pattern is proven, use this follow-up prompt to install FrameBoard:
 
 ```text
-Install FrameBoard in this project.
+Install FrameBoard from npm in this project.
+For React DOM use @frameboard/react and @frameboard/core.
+For Expo or React Native use @frameboard/react-native and @frameboard/core.
 Use the existing Screen + View + fixtures pattern.
 Create a private FrameBoard route that registers the representative screens and fixture states.
 Wrap screens in the project harness or app shell where that changes layout.

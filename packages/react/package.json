@@ -23,12 +23,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/frameboard/frameboard.git",
+    "url": "https://github.com/muhammaddadu/frameboard.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/frameboard/frameboard#readme",
+  "homepage": "https://muhammaddadu.github.io/frameboard/",
   "bugs": {
-    "url": "https://github.com/frameboard/frameboard/issues"
+    "url": "https://github.com/muhammaddadu/frameboard/issues"
   },
   "publishConfig": {
     "access": "public"

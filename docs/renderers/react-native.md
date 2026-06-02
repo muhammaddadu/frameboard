@@ -4,6 +4,10 @@ Use `@frameboard/react-native` for React Native and React Native Web hosts.
 
 ## Setup
 
+```bash
+pnpm add @frameboard/react-native @frameboard/core
+```
+
 ```tsx
 import {
   FrameBoard,

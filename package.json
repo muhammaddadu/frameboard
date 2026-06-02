@@ -18,7 +18,9 @@
     "dev:react": "pnpm build:packages && pnpm --filter @frameboard/react-app dev",
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "eslint . && pnpm -r --if-present lint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "publish:packages": "pnpm -r --filter @frameboard/core --filter @frameboard/react --filter @frameboard/react-native publish --access public --provenance --no-git-checks",
+    "publish:packages:dry-run": "pnpm -r --filter @frameboard/core --filter @frameboard/react --filter @frameboard/react-native publish --dry-run --access public --provenance --no-git-checks"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

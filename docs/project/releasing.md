@@ -1,6 +1,10 @@
 # Releasing
 
-FrameBoard is not published yet.
+FrameBoard publishes scoped packages to npm:
+
+- `@frameboard/core`
+- `@frameboard/react`
+- `@frameboard/react-native`
 
 ## Versioning Strategy
 
@@ -12,7 +16,7 @@ Use semantic versioning once public releases begin:
 
 ## Recommended Changeset Workflow
 
-Changesets are not installed yet. Add them when publishing is ready:
+Changesets are not installed yet. Add them if release notes and automated version PRs become useful:
 
 ```bash
 pnpm add -D @changesets/cli
@@ -46,11 +50,13 @@ Also verify:
 
 ## npm Publishing Checklist
 
-- remove accidental `private` flags from publishable packages
-- verify `publishConfig.access` is `public`
-- run `pnpm pack` for each package
-- inspect tarball contents
-- publish a prerelease first
+- Verify the package versions in `packages/*/package.json`.
+- Verify `publishConfig.access` is `public`.
+- Ensure the repository has an npm automation token stored as the `NPM_TOKEN` secret.
+- Run `pnpm typecheck`, `pnpm lint`, `pnpm test`, and `pnpm build:packages`.
+- Run `pnpm publish:packages:dry-run` to verify publish metadata.
+- Push a semver tag such as `v0.1.0`, or run the `Publish` workflow manually.
+- Confirm npm shows the expected package versions after the workflow completes.
 
 ## GitHub Release Checklist
 

@@ -4,6 +4,10 @@ Use `@frameboard/react` for DOM React apps.
 
 ## Setup
 
+```bash
+pnpm add @frameboard/react @frameboard/core
+```
+
 ```tsx
 import { FrameBoard } from '@frameboard/react';
 import '@frameboard/react/styles.css';

@@ -163,7 +163,7 @@ export const promptCards = [
     audience: 'Setup',
     outcome: 'Private review route with first valuable screens registered.',
     title: 'Install and wire FrameBoard',
-    body: 'Install FrameBoard in this project and add a private review board route. Register the highest-value screens first, include realistic fixture states, wrap screens in the app shell when chrome affects layout, and document how to add future states.',
+    body: 'Install FrameBoard from npm in this project. For React DOM use @frameboard/react and @frameboard/core. For Expo or React Native use @frameboard/react-native and @frameboard/core. Add a private review board route, register the highest-value screens first, include realistic fixture states, wrap screens in the app shell when chrome affects layout, and document how to add future states.',
   },
   {
     audience: 'Discovery',

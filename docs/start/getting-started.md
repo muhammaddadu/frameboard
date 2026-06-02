@@ -7,7 +7,7 @@ For an existing app, start by making important screens fixture-friendly. The scr
 Agent prompt:
 
 ```text
-Install FrameBoard in this project.
+Install FrameBoard from npm in this project. For React DOM use @frameboard/react and @frameboard/core. For Expo or React Native use @frameboard/react-native and @frameboard/core.
 Audit the codebase and identify the highest-value product screens to review.
 Refactor those screens so their visual state comes from top-level props instead of hidden fetches, storage reads, navigation side effects, or global mutations.
 Create deterministic fixtures for loading, empty, error, permission, success, processing, long content, responsive, and dark-mode states.
@@ -17,13 +17,13 @@ Document how future screens and fixture states should be added.
 
 ## Install
 
-FrameBoard is pre-release and not published yet. After publishing:
+React DOM:
 
 ```bash
 pnpm add @frameboard/react @frameboard/core
 ```
 
-For React Native / Expo:
+React Native / Expo:
 
 ```bash
 pnpm add @frameboard/react-native @frameboard/core

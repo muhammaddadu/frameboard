@@ -4,7 +4,7 @@ See every screen and state of your app in one place.
 
 FrameBoard is a product-state review board for React and React Native apps. It renders real screen components against fixture states on a Figma-style canvas, so teams can review screens, device presets, responsive layouts, themes, app-shell previews, and screenshot exports without manually clicking through an app.
 
-FrameBoard is pre-release and not published to npm yet.
+FrameBoard packages install from npm under the `@frameboard` scope.
 
 ## Website And Demo
 
@@ -80,8 +80,6 @@ In the GitHub repository settings, set Pages to deploy from GitHub Actions. The 
 
 ## Installation
 
-Packages are not published yet. Once published:
-
 ```bash
 pnpm add @frameboard/react @frameboard/core
 ```
@@ -99,7 +97,7 @@ FrameBoard gives the best results when screens can be rendered from fixture prop
 Use this prompt with a coding agent inside an existing project:
 
 ```text
-Install FrameBoard in this project.
+Install FrameBoard from npm in this project. For React DOM use @frameboard/react and @frameboard/core. For Expo or React Native use @frameboard/react-native and @frameboard/core.
 Audit the codebase and identify the highest-value product screens to review.
 Refactor those screens so their visual state comes from top-level props instead of hidden fetches, storage reads, navigation side effects, or global mutations.
 Create deterministic fixtures for loading, empty, error, permission, success, processing, long content, responsive, and dark-mode states.
@@ -194,7 +192,6 @@ export function ScreenReview() {
 
 ## Roadmap
 
-- package publishing
 - screenshot automation
 - visual regression
 - CI screenshot generation

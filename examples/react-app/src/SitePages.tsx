@@ -142,7 +142,9 @@ function HomePage() {
             <Sparkles size={20} />
             <h3>Recommended agent prompt</h3>
           </div>
-          <pre><code>{`Install FrameBoard in this project.
+          <pre><code>{`Install FrameBoard from npm in this project.
+For React DOM use @frameboard/react and @frameboard/core.
+For Expo or React Native use @frameboard/react-native and @frameboard/core.
 Audit the existing codebase and refactor valuable screens so state comes from top-level props.
 Create deterministic fixtures for loading, empty, error, permission, success, long content, responsive, and dark-mode states.
 Expose a private FrameBoard route that wraps screens in the real app shell without causing navigation, network, analytics, or storage side effects.
@@ -299,7 +301,7 @@ function PromptsPage() {
             <Terminal size={17} />
             <span>agent prompt</span>
           </div>
-          <pre><code>{`Install FrameBoard.
+          <pre><code>{`Install FrameBoard from npm.
 Register risky screens.
 Add states users actually hit.
 Make the review board impossible to ignore.`}</code></pre>
