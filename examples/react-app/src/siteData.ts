@@ -154,6 +154,12 @@ function InboxScreen() {
 
 export const promptCards = [
   {
+    audience: 'Preparation',
+    outcome: 'React, Expo, or React Native screens refactored into Screen + View + fixtures.',
+    title: 'Prepare screens for FrameBoard',
+    body: 'Refactor this React / Expo React Native project so meaningful product screens can be rendered independently in FrameBoard. First inspect routing, providers, state management, API usage, theme system, design system, and screen files. Create docs/frameboard-screen-refactor.md, then refactor 2-3 representative screens into ScreenNameScreen.tsx containers, ScreenNameView.tsx presentational views, ScreenName.fixtures.ts deterministic fixture states, and index.ts exports. Route files should be thin wrappers. Views should accept data, loading, error, permission, empty-state, and action handlers through props, and should not directly use router hooks, API hooks, auth hooks, storage, analytics, notifications, camera, file picker, or native-only APIs. Preserve current UI and behavior, run lint/typecheck/tests/build, and list remaining screens to migrate.',
+  },
+  {
     audience: 'Setup',
     outcome: 'Private review route with first valuable screens registered.',
     title: 'Install and wire FrameBoard',
@@ -182,6 +188,7 @@ export const docsFiles = [
   { group: 'Guides', path: 'docs/guides/theming.md', title: 'Theming' },
   { group: 'Guides', path: 'docs/guides/app-shells.md', title: 'App Shells' },
   { group: 'Guides', path: 'docs/guides/screenshot-export.md', title: 'Screenshot Export' },
+  { group: 'Website', path: 'docs/website/frameboard-screen-refactor-prompt.md', title: 'FrameBoard Screen Refactor Prompt' },
   { group: 'Reference', path: 'docs/reference/device-presets.md', title: 'Device Presets' },
   { group: 'Reference', path: 'docs/reference/responsive-dimensions.md', title: 'Responsive Dimensions' },
   { group: 'Project', path: 'docs/project/architecture.md', title: 'Architecture' },

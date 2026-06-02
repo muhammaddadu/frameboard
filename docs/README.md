@@ -17,6 +17,10 @@
 - [App Shells](guides/app-shells.md)
 - [Screenshot Export](guides/screenshot-export.md)
 
+## Website
+
+- [FrameBoard Screen Refactor Prompt](website/frameboard-screen-refactor-prompt.md)
+
 ## Reference
 
 - [Device Presets](reference/device-presets.md)
