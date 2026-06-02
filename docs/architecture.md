@@ -62,4 +62,4 @@ The host app provides:
 - route or page where FrameBoard is mounted
 - native side-effect suppression for gallery-safe rendering
 
-FrameBoard has no awareness of FileoFix or any host app.
+FrameBoard has no awareness of any host app.

@@ -15,7 +15,7 @@ frameboard/
   website/
 ```
 
-FrameBoard has the intended package split and two working examples. The repository is still shaped like a private extraction rather than a public GitHub library.
+FrameBoard has the intended package split, two working examples, open-source project files, CI, tests, and package build output. It is close to public GitHub readiness but still needs final release decisions before npm publishing.
 
 ## Package Status
 
@@ -23,25 +23,24 @@ FrameBoard has the intended package split and two working examples. The reposito
 - `@frameboard/react` contains the DOM React board renderer, CSS, and browser PNG export support.
 - `@frameboard/react-native` contains the React Native / Expo board renderer, responsive dimension override hook/provider, native device frame, and optional browser PNG export support.
 
-Current gaps:
+Completed:
 
-- package entrypoints point at `src/` instead of production `dist/`
-- packages are private and use incomplete metadata
-- no package build output exists yet
-- package scripts do not include `build`, `clean`, or meaningful `test`
-- source files are consumed directly by examples and FileoFix
-- package publishing fields such as `files`, `repository`, `homepage`, and `bugs` are missing or incomplete
+- package entrypoints point at production `dist/`
+- packages include MIT license metadata, keywords, repository, homepage, bugs, files, and public publish config
+- `pnpm build` emits JavaScript, source maps, declarations, and React CSS
+- scripts now include `build`, `clean`, `typecheck`, `lint`, and `test`
+- package tests cover core helpers, validation, responsive dimensions, and React render smoke behavior
 
 ## Example App Status
 
 - `examples/react-app` runs with Vite and demonstrates multiple screens and states.
 - `examples/react-native-app` runs with Expo web and demonstrates responsive dimensions and app-shell rendering.
 
-Current gaps:
+Completed:
 
-- examples do not have README files
-- root scripts do not expose convenient `dev:react` or `dev:native` commands
-- examples are intentionally small, but docs should explain what each demonstrates
+- each example has a README
+- root scripts expose `pnpm dev:react` and `pnpm dev:native`
+- examples remain intentionally small and demonstrate the major integration points
 
 ## Public API Status
 
@@ -55,9 +54,8 @@ Supported host controls include devices, theme mode, app shell rendering, URL pa
 
 Current risks:
 
-- there is no runtime validation for empty screens, missing states, or malformed registrations
-- package exports are not yet stable enough for npm because they point to source files
 - React and React Native renderers use similar APIs but have separate renderer-specific screen types
+- public API naming should receive one more review before npm publishing
 
 ## Build/Test/Lint Status
 
@@ -67,18 +65,16 @@ Current commands:
 - `pnpm lint`
 - `pnpm test`
 
-Current gaps:
+Completed:
 
-- `pnpm test` is only a typecheck alias
-- no build command exists
-- no clean command exists
-- no package artifacts are generated
-- no core helper tests exist
-- no React renderer smoke test exists
+- `pnpm test` runs Vitest
+- `pnpm build` generates package artifacts and builds the React example
+- `pnpm clean` removes generated outputs
+- core helper tests and React render smoke tests exist
 
 ## Open-Source Hygiene Gaps
 
-Missing or incomplete:
+Completed:
 
 - `LICENSE`
 - `CONTRIBUTING.md`
@@ -94,7 +90,7 @@ Missing or incomplete:
 
 ## CI/CD Gaps
 
-Missing:
+Completed:
 
 - `.github/workflows/ci.yml`
 - pull request and main-branch validation
@@ -106,34 +102,16 @@ Publishing is intentionally not configured yet.
 
 ## Documentation Gaps
 
-Existing docs cover architecture, responsive dimensions, screenshot export, theming, app shells, contributing notes, and migration history.
-
-Needed docs:
-
-- getting started
-- React integration
-- React Native integration
-- Expo integration
-- fixtures
-- device presets
-- visual regression roadmap
-- AI audit roadmap
-- releasing
-
-README needs to be updated for a public audience and should explain how FrameBoard differs from Storybook.
+Completed docs now cover architecture, getting started, React, React Native, Expo, fixtures, device presets, responsive dimensions, screenshot export, theming, app shells, visual regression roadmap, AI audit roadmap, releasing, contributing, and migration history.
 
 ## Publishing Gaps
 
 Before publishing:
 
-- produce `dist/` output for each package
-- point package exports to `dist/`
-- emit declaration files
-- add package metadata
+- run final package tarball checks
 - decide versioning strategy
 - add Changesets or document a release workflow
-- run package tarball checks
-- keep packages private until release is intentional
+- decide whether to add Changesets before first npm prerelease
 
 ## Recommended Changes
 
@@ -143,11 +121,11 @@ Before publishing:
 4. Add focused tests for core registry helpers and runtime validation.
 5. Add CI that runs install, typecheck, lint, test, and build.
 6. Expand docs and example READMEs so a developer can run FrameBoard quickly.
-7. Re-run FileoFix compatibility after changing package exports.
+7. Re-run a linked-host compatibility check after changing package exports.
 
 ## Risks
 
 - Changing exports from `src/` to `dist/` can break local consumers unless the package is built first.
 - Bundling React Native code must keep React, React Native, Expo, and icon dependencies external.
 - Adding too much release tooling now could make the package harder to maintain before the API stabilizes.
-- FileoFix uses a local linked package, so its validation must run after FrameBoard build output exists.
+- Local linked host apps need package build output, so compatibility validation must run after `pnpm build`.
