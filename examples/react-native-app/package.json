@@ -10,14 +10,14 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~6.1.2",
+    "@expo/metro-runtime": "~55.0.11",
     "@frameboard/react-native": "workspace:*",
     "expo": "~55.0.0",
     "lucide-react-native": "^0.468.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-native": "^0.82.1",
-    "react-native-svg": "^15.12.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.6",
+    "react-native-svg": "15.15.3",
     "react-native-web": "^0.21.2",
     "typescript": "^5.9.2"
   },
