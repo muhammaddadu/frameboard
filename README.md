@@ -43,6 +43,14 @@ pnpm dev:react
 pnpm dev:native
 ```
 
+Build the GitHub Pages demo:
+
+```bash
+pnpm build:pages
+```
+
+The Pages workflow publishes the React demo from `examples/react-app/dist`. In the GitHub repository settings, set Pages to deploy from GitHub Actions.
+
 ## Installation
 
 Packages are not published yet. Once published:

@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:packages && pnpm --filter @frameboard/react-app build",
+    "build:pages": "pnpm clean && pnpm build:packages && FRAMEBOARD_BASE_PATH=${FRAMEBOARD_BASE_PATH:-/frameboard/} pnpm --filter @frameboard/react-app build",
     "build:packages": "tsup && node scripts/copy-assets.mjs",
     "clean": "node scripts/clean.mjs",
     "dev:native": "pnpm build:packages && pnpm --filter @frameboard/react-native-app start",
