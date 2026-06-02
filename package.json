@@ -9,6 +9,11 @@
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm typecheck"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
   "devDependencies": {
     "@types/node": "^22.15.30",
     "typescript": "^5.9.2"

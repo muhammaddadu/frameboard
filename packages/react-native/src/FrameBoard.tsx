@@ -326,7 +326,7 @@ function Sidebar<TMeta>({
   colors: FrameBoardColors;
   normalized: NormalizedFrameBoardParams<ComponentType<unknown>, unknown, TMeta>;
   onParams: (params: Partial<FrameBoardParamSnapshot>) => void;
-  screens: FrameBoardNativeScreen<unknown, TMeta>[];
+  screens: FrameBoardNativeScreen<any, TMeta>[];
   subtitle: string;
   title: string;
 }) {

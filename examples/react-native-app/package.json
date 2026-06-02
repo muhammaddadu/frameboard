@@ -1,0 +1,27 @@
+{
+  "name": "@frameboard/react-native-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Expo React Native example for FrameBoard.",
+  "main": "App.tsx",
+  "scripts": {
+    "start": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~6.1.2",
+    "@frameboard/react-native": "workspace:*",
+    "expo": "~55.0.0",
+    "lucide-react-native": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native": "^0.82.1",
+    "react-native-svg": "^15.12.1",
+    "react-native-web": "^0.21.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "FrameBoard Native Example",
+    "slug": "frameboard-native-example",
+    "version": "0.1.0",
+    "platforms": ["ios", "android", "web"],
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

@@ -40,7 +40,7 @@ export type FrameBoardNativeProps<TMeta = unknown> = {
     children: ReactNode;
     screen: FrameBoardNativeScreen<unknown, TMeta>;
   }) => ReactNode;
-  screens: FrameBoardNativeScreen<unknown, TMeta>[];
+  screens: FrameBoardNativeScreen<any, TMeta>[];
   subtitle?: string;
   themeMode?: FrameBoardThemeMode;
   title?: string;

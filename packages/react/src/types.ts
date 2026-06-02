@@ -8,7 +8,7 @@ import {
   type FrameBoardThemeMode,
 } from '@frameboard/core';
 
-export type FrameBoardReactScreen<TProps = Record<string, never>, TMeta = unknown> = {
+export type FrameBoardReactScreen<TProps = unknown, TMeta = unknown> = {
   component: ComponentType<TProps>;
   description?: string;
   id: string;
@@ -30,9 +30,9 @@ export type FrameBoardReactProps<TMeta = unknown> = {
   params?: FrameBoardParams;
   renderAppShell?: (input: {
     children: ReactNode;
-    screen: FrameBoardReactScreen<Record<string, never>, TMeta>;
+    screen: FrameBoardReactScreen<any, TMeta>;
   }) => ReactNode;
-  screens: FrameBoardReactScreen<Record<string, never>, TMeta>[];
+  screens: FrameBoardReactScreen<any, TMeta>[];
   subtitle?: string;
   themeMode?: FrameBoardThemeMode;
   title?: string;

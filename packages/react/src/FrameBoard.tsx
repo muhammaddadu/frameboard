@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ComponentType } from 'react';
 import {
   Download,
   Frame,
@@ -134,8 +134,8 @@ export function FrameBoard<TMeta = unknown>({
   };
 
   const exportArtboard = async (
-    screen: FrameBoardReactScreen<Record<string, never>, TMeta>,
-    state: FrameBoardState<Record<string, never>>,
+    screen: FrameBoardReactScreen<any, TMeta>,
+    state: FrameBoardState<unknown>,
   ) => {
     const theme = normalized.themeMode === 'system'
       ? `system-${isDark ? 'dark' : 'light'}`
@@ -414,14 +414,14 @@ function Artboard<TMeta>({
   device: FrameBoardDevice;
   isDark: boolean;
   renderAppShell?: FrameBoardReactProps<TMeta>['renderAppShell'];
-  screen: FrameBoardReactScreen<Record<string, never>, TMeta>;
+  screen: FrameBoardReactScreen<any, TMeta>;
   showAppShell: boolean;
   showReviewNotes: boolean;
-  state: FrameBoardState<Record<string, never>>;
+  state: FrameBoardState<unknown>;
   themeMode: FrameBoardThemeMode;
   zoom: number;
 }) {
-  const Component = screen.component;
+  const Component = screen.component as ComponentType<Record<string, unknown>>;
   const readableState = humanizeFrameBoardStateName(state);
   const caption = getDefaultFrameBoardStateCaption(screen, state);
   const modeLabel = themeMode === 'system' ? `system ${isDark ? 'dark' : 'light'}` : themeMode;
@@ -431,7 +431,10 @@ function Artboard<TMeta>({
     stateId: state.id,
     theme: modeLabel.replace(/\s+/g, '-'),
   });
-  const rendered = <Component {...(state.props ?? {})} />;
+  const stateProps = state.props && typeof state.props === 'object'
+    ? state.props as Record<string, unknown>
+    : {};
+  const rendered = <Component {...stateProps} />;
 
   return (
     <div className='fb-artboard' id={artboardId}>

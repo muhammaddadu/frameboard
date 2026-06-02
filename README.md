@@ -2,17 +2,19 @@
 
 See every screen and state of your app in one place.
 
-FrameBoard is a reusable screen review board for React, React Native, and Expo apps. Register your screens and fixture states, then inspect them across devices, themes, app shell modes, and responsive breakpoints from a single canvas.
+FrameBoard is a screen review board for React, React Native, and Expo apps. It renders registered screens against fixture states in a Figma-style canvas so product, design, and engineering teams can review UI states without opening real app flows.
+
+FrameBoard is currently private and unpublished.
 
 ## Packages
 
-- `@frameboard/core` - framework-agnostic registry, devices, params, and utility types.
-- `@frameboard/react` - DOM React board for browser apps and Vite examples.
-- `@frameboard/react-native` - React Native and Expo board with responsive dimension overrides.
+- `@frameboard/core`: framework-agnostic devices, registry helpers, URL param normalization, and export naming utilities.
+- `@frameboard/react`: DOM React board renderer with canvas UI and PNG export.
+- `@frameboard/react-native`: React Native / Expo renderer with responsive dimension overrides and native-style device frames.
 
 ## Install
 
-Publishing is not enabled yet. During local development, consume packages through this pnpm workspace or a local file/workspace link.
+This repository uses pnpm workspaces:
 
 ```bash
 pnpm install
@@ -21,58 +23,122 @@ pnpm lint
 pnpm test
 ```
 
-## React
+The packages are private during extraction. Use workspace or local `link:` dependencies until publishing is planned.
+
+## React Example
 
 ```tsx
-import { FrameBoard } from '@frameboard/react';
+import { FrameBoard } from "@frameboard/react";
+import "@frameboard/react/styles.css";
 
-<FrameBoard
-  screens={[
-    {
-      id: 'home',
-      name: 'Home',
-      component: HomeScreen,
-      states: [
-        { id: 'loading', name: 'Loading', props: { status: 'loading' } },
-        { id: 'empty', name: 'Empty', props: { status: 'empty' } },
-      ],
-    },
-  ]}
-/>
+function HomeScreen(props: { title: string }) {
+  return <main>{props.title}</main>;
+}
+
+export function Gallery() {
+  return (
+    <FrameBoard
+      screens={[
+        {
+          id: "home",
+          name: "Home",
+          component: HomeScreen,
+          states: [
+            { id: "loading", props: { title: "Loading" } },
+            { id: "empty", props: { title: "Nothing here yet" } },
+          ],
+        },
+      ]}
+    />
+  );
+}
 ```
 
-## React Native / Expo
+Run the Vite example:
+
+```bash
+pnpm --filter @frameboard/react-app dev
+```
+
+## React Native / Expo Example
 
 ```tsx
 import {
   FrameBoard,
   useResponsiveDimensions,
-} from '@frameboard/react-native';
+} from "@frameboard/react-native";
+import { Text } from "react-native";
 
 function HomeScreen() {
   const { width } = useResponsiveDimensions();
-  return <HomeLayout compact={width < 380} />;
+  return <Text>{width < 390 ? "Compact" : "Regular"}</Text>;
 }
 
-<FrameBoard screens={screens} />
+export function Gallery() {
+  return (
+    <FrameBoard
+      screens={[
+        {
+          id: "home",
+          name: "Home",
+          component: HomeScreen,
+          states: [{ id: "ready" }],
+        },
+      ]}
+    />
+  );
+}
+```
+
+Run the Expo example:
+
+```bash
+pnpm --filter @frameboard/react-native-app start
 ```
 
 ## Concepts
 
-- **Screens** are product surfaces such as Home, Inbox, Settings, or Checkout.
-- **States** are durable visual states such as loading, empty, populated, error, long content, or tablet split.
-- **Devices** define the simulated artboard dimensions.
-- **Product Board** renders all screens and states.
-- **Focus View** renders one selected screen and its states.
-- **App shell** lets a host render static navigation chrome around a screen.
-- **Responsive dimensions** let React Native Views believe they are rendering at the selected device size.
+- **Screens** are host app components.
+- **States** are fixture-driven prop sets for those screens.
+- **Device presets** define the simulated artboard width and height.
+- **App shells** are optional host-provided wrappers for tabs, headers, or navigation chrome.
+- **Responsive dimensions** let React Native screen Views receive the selected device width in the board instead of the browser viewport.
+- **Screenshot export** captures rendered artboards with predictable filenames like `home-loading-iphone-15-light.png`.
 
-## Documentation
+## API
 
-- [Architecture](docs/architecture.md)
-- [Responsive Dimensions](docs/responsive-dimensions.md)
-- [Screenshot Export](docs/screenshot-export.md)
-- [Theming](docs/theming.md)
-- [App Shells](docs/app-shells.md)
-- [Contributing](docs/contributing.md)
-- [Migration Plan](docs/migration-plan.md)
+The smallest useful API is:
+
+```tsx
+<FrameBoard screens={screens} />
+```
+
+Useful optional props:
+
+- `devices`
+- `defaultDeviceId`
+- `themeMode`
+- `isDark`
+- `renderAppShell`
+- `params`
+- `onParamsChange`
+- `onThemeModeChange`
+- `notes`
+- `colors`
+
+## Repository Layout
+
+```txt
+packages/
+  core/
+  react/
+  react-native/
+examples/
+  react-app/
+  react-native-app/
+docs/
+```
+
+## Status
+
+FrameBoard has been extracted from FileoFix into a standalone private repository. The next hardening step is replacing FileoFix's internal package dependency with this repository and validating its gallery routes.

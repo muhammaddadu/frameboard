@@ -199,6 +199,24 @@ frameboard/
   README.md
 ```
 
+## Extraction Status
+
+Completed in the standalone repository:
+
+- `@frameboard/core` exists and is framework-agnostic.
+- `@frameboard/react` exists as a DOM React renderer with canvas UI and PNG export.
+- `@frameboard/react-native` exists as a React Native / Expo renderer with responsive dimension overrides.
+- `examples/react-app` demonstrates Vite + React.
+- `examples/react-native-app` demonstrates Expo + React Native.
+- Documentation exists for architecture, responsive dimensions, screenshot export, theming, app shells, and contributing.
+
+Still pending:
+
+- Replace FileoFix's internal `@fileofix/screen-board` usage with local `@frameboard/react-native`.
+- Remove the old internal `packages/screen-board` package from FileoFix after the linked integration passes.
+- Smoke-test the React and Expo examples in browser.
+- Add a real test runner and behavioral tests before publishing.
+
 ## Risks
 
 1. **Renderer split risk**
@@ -292,9 +310,9 @@ Manual verification:
 
 ## Initial Technical Debt To Carry Forward
 
-- DOM React renderer must be implemented rather than copied from the RN renderer.
 - The public API should be simplified before publishing.
 - Full product board PNG export is not implemented yet.
 - Visual regression and CI screenshot automation are out of scope for this extraction.
 - Comment/collaboration models are not implemented.
 - Documentation website can be scaffolded but does not need full marketing content in the first extraction.
+- Current tests are type-safety smoke checks. Add unit/component tests before publishing.
